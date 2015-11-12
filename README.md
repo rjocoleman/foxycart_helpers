@@ -1,11 +1,11 @@
-# Foxycart
+# FoxycartHelpers
 
 
 __Rack/Sinatra:__
 
 ```ruby
   # config.ru
-  require 'foxycart/middleware'
+  require 'foxycart_helpers/middleware'
   use Foxycart::Middleware
 ```
 
@@ -14,7 +14,7 @@ __Rack/Sinatra:__
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'foxycart'
+gem 'foxycart_helpers'
 ```
 
 And then execute:
@@ -23,7 +23,7 @@ And then execute:
 
 Or install it yourself as:
 
-`$ gem install foxycart`
+`$ gem install foxycart_helpers`
 
 ## Usage
 

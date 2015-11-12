@@ -1,4 +1,4 @@
-module Foxycart
+module FoxycartHelpers
   LISTENERS = Array.new
 
   def self.subscribe(&block)

@@ -1,9 +1,9 @@
-require 'foxycart/configuration'
+require 'foxycart_helpers/configuration'
 
 require 'rc4'
 require 'nori'
 
-module Foxycart
+module FoxycartHelpers
   class Datafeed
 
     def self.from_params(params)
@@ -12,7 +12,7 @@ module Foxycart
       trimmed = decoded.gsub(/FoxyData=/, '')
       encrypted = URI.unescape trimmed
 
-      rc4 = RC4.new Foxycart.configuration.api_key
+      rc4 = RC4.new FoxycartHelpers.configuration.api_key
       decrypted = rc4.decrypt encrypted
 
       parser = Nori.new

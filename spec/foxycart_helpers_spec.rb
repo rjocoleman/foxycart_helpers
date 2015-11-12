@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Foxycart do
+describe FoxycartHelpers do
   it 'has a version number' do
     expect(Foxycart::VERSION).not_to be nil
   end

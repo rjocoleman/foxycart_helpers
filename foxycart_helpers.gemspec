@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'foxycart/version'
+require 'foxycart_helpers/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'foxycart'
-  spec.version       = Foxycart::VERSION
+  spec.name          = 'foxycart_helpers'
+  spec.version       = FoxycartHelpers::VERSION
   spec.authors       = ['Robert Coleman']
   spec.email         = ['github@robert.net.nz']
 

@@ -1,8 +1,8 @@
-require 'foxycart/configuration'
-require 'foxycart/listeners'
-require 'foxycart/datafeed'
+require 'foxycart_helpers/configuration'
+require 'foxycart_helpers/listeners'
+require 'foxycart_helpers/datafeed'
 
-module Foxycart
+module FoxycartHelpers
   class Middleware
 
     def initialize(app=nil)
@@ -25,7 +25,7 @@ module Foxycart
 
     def parse_and_respond(params)
       datafeed = Datafeed.from_params params
-      Foxycart.propagate datafeed
+      FoxycartHelpers.propagate datafeed
       response 200, 'foxy'
     rescue => e
       raise e if config.raise_exceptions?

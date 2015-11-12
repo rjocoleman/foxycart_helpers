@@ -1,4 +1,4 @@
-module Foxycart
+module FoxycartHelpers
 
   class << self
     attr_accessor :configuration
