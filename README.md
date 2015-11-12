@@ -1,13 +1,8 @@
-# FoxycartHelpers
+# Foxycart Helpers
 
+Several helpers for working with FoxyCart:
 
-__Rack/Sinatra:__
-
-```ruby
-  # config.ru
-  require 'foxycart_helpers/middleware'
-  use Foxycart::Middleware
-```
+* Webhook endpoint for Datafeeds - https://wiki.foxycart.com/v/2.0/transaction_xml_datafeed
 
 ## Installation
 
@@ -27,7 +22,33 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Transactional Datafeed Webhook
+
+This helper creates a Rack endpoint to receive a POSTed XML data feed, it:
+
+* Automatically URL decodes the POST.
+* Decrypts with your API key `ENV['FOXYCART_API_KEY']`
+* Parses the XML and presents it as a hash.
+
+__Rack/Sinatra:__
+
+```ruby
+  # config.ru
+  require 'foxycart_helpers/middleware'
+  use Foxycart::Middleware
+```
+
+__Rails:__ This middleware is registered automatically.
+
+```ruby
+FoxycartHelpers.subscribe do |payload|
+  puts payload
+  # Do something with payload
+  # You probably want to fire a background task
+end
+```
+
+In Rails this could live at `config/initalizers/foxycart.rb`
 
 ## Development
 
@@ -37,7 +58,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/foxycart.
+Bug reports and pull requests are welcome on GitHub at https://github.com/rjocoleman/foxycart_helpers.
 
 
 ## License
