@@ -20,7 +20,7 @@ module FoxycartHelpers
     end
 
     def encoded_name
-      @name + '||' + encode
+      @value + '||' + encode
     end
 
     def config
