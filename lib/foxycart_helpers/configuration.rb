@@ -16,6 +16,7 @@ module FoxycartHelpers
     attr_accessor *[
       :logger,
       :api_key,
+      :url,
       :mount_point,
       :raise_exceptions,
     ]
@@ -26,6 +27,7 @@ module FoxycartHelpers
       @mount_point      = '/foxycart_processor'
       @logger           = Logger.new STDOUT
       @api_key          = ENV.fetch 'FOXYCART_API_KEY'
+      @url              = ENV['FOXYCART_URL']
       @raise_exceptions = true unless ENV['RACK_ENV'] == 'production'
     end
 
