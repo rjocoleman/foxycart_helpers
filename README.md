@@ -5,6 +5,7 @@ Several helpers for working with FoxyCart in plain Ruby (several Rails helpers a
 * Webhook endpoint for Datafeeds - https://wiki.foxycart.com/v/2.0/transaction_xml_datafeed
 * HMAC Product Verification - https://wiki.foxycart.com/v/2.0/hmac_validation
 * Link href builder (with support for Product Verification)
+* Generation of the store `loader.js` Javascript URL and HTML.
 
 ## Installation
 
@@ -29,7 +30,9 @@ The datafeed endpoint defaults to '/foxycart_processor'. If your app is at `http
 
 `ENV['FOXYCART_API_KEY']` should be set to your FoxyCart API key (available from the FoxyCart Admin area).
 
-Or you can override these in configuration:
+`ENV['FOXYCART_URL']` should be set to your store URL.
+
+Or you can override/set these in configuration:
 
 ```ruby
 # In an appropriate initializer e.g. /config/initializers/foxycart.rb
@@ -111,7 +114,7 @@ In your views:
 
 ## Link HREF builder
 
-Creates cart HREFs (encoded or plain) given for a store URL.
+Creates cart HREFs (encoded or plain) given for a store URL `ENV['FOXYCART_URL']`.
 
 Params are:
 
@@ -142,6 +145,32 @@ In your views:
 <%= link_to 'Click the Link', foxycart_url_for('Cool Example', '10', 'sku123') %>
 # => "<a href=\"https://example.foxycart.com/cart?name=Cool+Example&price=10&color=red\">Click the Link</a>"
 ```
+
+## `loader.js`
+
+FoxyCart's required Javascript. Always linked as HTTPS.
+Available as just the URL and HTML element. Inferred from your configured store URL.
+
+
+__Standalone:__
+
+```ruby
+FoxycartHelpers::Javascript.url
+# => "https://cdn.foxycart.com/example/loader.js"
+
+FoxycartHelpers::Javascript.html_element
+# => "<script src=\"https://cdn.foxycart.com/example/loader.js\" async defer></script>"
+```
+
+__Rails:__
+
+Helper for use in your layout or relevant pages:
+
+```ruby
+<%= foxycart_loader_js %>
+# => "<script src=\"https://cdn.foxycart.com/example/loader.js\" async defer></script>"
+```
+
 
 ## Development
 
