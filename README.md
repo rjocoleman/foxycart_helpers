@@ -162,6 +162,16 @@ FoxycartHelpers::Javascript.html_element
 # => "<script src=\"https://cdn.foxycart.com/example/loader.js\" async defer></script>"
 ```
 
+__Rails:__
+
+Helper for use in your layout or relevant pages:
+
+```ruby
+<%= foxycart_loader_js %>
+# => "<script src=\"https://cdn.foxycart.com/example/loader.js\" async defer></script>"
+```
+
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
