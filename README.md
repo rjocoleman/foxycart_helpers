@@ -29,7 +29,9 @@ The datafeed endpoint defaults to '/foxycart_processor'. If your app is at `http
 
 `ENV['FOXYCART_API_KEY']` should be set to your FoxyCart API key (available from the FoxyCart Admin area).
 
-Or you can override these in configuration:
+`ENV['FOXYCART_URL']` should be set to your store URL.
+
+Or you can override/set these in configuration:
 
 ```ruby
 # In an appropriate initializer e.g. /config/initializers/foxycart.rb
@@ -111,7 +113,7 @@ In your views:
 
 ## Link HREF builder
 
-Creates cart HREFs (encoded or plain) given for a store URL.
+Creates cart HREFs (encoded or plain) given for a store URL `ENV['FOXYCART_URL']`.
 
 Params are:
 
