@@ -18,9 +18,10 @@ module FoxycartHelpers
     end
 
     def query_string
-      params = config.auto_encode? ? encoded_query_hash : query_hash
+      params = config.auto_encode_hrefs? ? encoded_query_hash : query_hash
       string = URI.encode_www_form(params)
-      return string unless config.auto_encode?
+
+      return string unless config.auto_encode_hrefs?
       CGI.unescape string
     end
 
