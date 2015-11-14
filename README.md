@@ -5,6 +5,7 @@ Several helpers for working with FoxyCart in plain Ruby (several Rails helpers a
 * Webhook endpoint for Datafeeds - https://wiki.foxycart.com/v/2.0/transaction_xml_datafeed
 * HMAC Product Verification - https://wiki.foxycart.com/v/2.0/hmac_validation
 * Link href builder (with support for Product Verification)
+* Generation of the store `loader.js` Javascript URL and HTML.
 
 ## Installation
 
@@ -143,6 +144,22 @@ In your views:
 # => "https://example.foxycart.com/cart?name=Cool+Example&price=10&color=red"
 <%= link_to 'Click the Link', foxycart_url_for('Cool Example', '10', 'sku123') %>
 # => "<a href=\"https://example.foxycart.com/cart?name=Cool+Example&price=10&color=red\">Click the Link</a>"
+```
+
+## `loader.js`
+
+FoxyCart's required Javascript. Always linked as HTTPS.
+Available as just the URL and HTML element. Inferred from your configured store URL.
+
+
+__Standalone:__
+
+```ruby
+FoxycartHelpers::Javascript.url
+# => "https://cdn.foxycart.com/example/loader.js"
+
+FoxycartHelpers::Javascript.html_element
+# => "<script src=\"https://cdn.foxycart.com/example/loader.js\" async defer></script>"
 ```
 
 ## Development
