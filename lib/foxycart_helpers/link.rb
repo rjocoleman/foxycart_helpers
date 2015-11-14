@@ -26,11 +26,11 @@ module FoxycartHelpers
     end
 
     def query_hash
-      {
-        name: @name,
-        price: @price,
-        code: @code,
-      }.merge(@opts)
+      Hash.new.tap do |h|
+        h[:name] = @name
+        h[:price] = @price
+        h[:code] = @code if @code
+      end.merge(@opts)
     end
 
     def encoded_query_hash
