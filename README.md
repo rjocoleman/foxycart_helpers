@@ -1,6 +1,6 @@
 # Foxycart Helpers
 
-Several helpers for working with FoxyCart:
+Several helpers for working with FoxyCart in plain Ruby (several Rails helpers are included too but Rails isn't required):
 
 * Webhook endpoint for Datafeeds - https://wiki.foxycart.com/v/2.0/transaction_xml_datafeed
 * HMAC Product Verification - https://wiki.foxycart.com/v/2.0/hmac_validation
@@ -109,9 +109,9 @@ In your views:
 # => "name||54a534ba0afef1b4589c2f77f9011e27089c0030a8876ec8f06fca281fedeb89"
 ```
 
-## Link Href builder
+## Link HREF builder
 
-Creates cart hrefs (encoded or plain) given for a store URL.
+Creates cart HREFs (encoded or plain) given for a store URL.
 
 Params are:
 
@@ -120,14 +120,27 @@ Params are:
 * `code` (required if product validation is used)
 * `opts` a hash, supported values here: https://wiki.foxycart.com/v/2.0/cheat_sheet
 
+__Standalone:__
+
 ```ruby
 # plain
 FoxycartHelpers::Link.href 'Cool Example', '10', nil, { color: 'red' }
 # => "https://example.foxycart.com/cart?name=Cool+Example&price=10&color=red"
 
-# encoded
+# encoded (switched on in config)
 FoxycartHelpers::Link.href 'Cool Example', '10', 'sku123', { color: 'red' }
 => "https://example.foxycart.com/cart?name=Cool%20Example||54a534ba0afef1b4589c2f77f9011e27089c0030a8876ec8f06fca281fedeb89&price=10||a36dd6bcf3587676c9926d389c87cda3bf0033e6c40e0cc7124edc38409f16a9&code=sku123||dc2a524b987ee5e18af483c1a9e2d333f50eae7d8ed417b8b39442dff4c3ab82&color=red||a81b7a17e4f142ae99678fba7e479734785914953a07a42a0dbd44e145775ae9"
+```
+
+__Rails:__
+
+In your views:
+
+```
+<%= foxycart_url_for('Cool Example', '10', 'sku123') %>
+# => "https://example.foxycart.com/cart?name=Cool+Example&price=10&color=red"
+<%= link_to 'Click the Link', foxycart_url_for('Cool Example', '10', 'sku123') %>
+# => "<a href=\"https://example.foxycart.com/cart?name=Cool+Example&price=10&color=red\">Click the Link</a>"
 ```
 
 ## Development
