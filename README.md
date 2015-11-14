@@ -3,6 +3,7 @@
 Several helpers for working with FoxyCart:
 
 * Webhook endpoint for Datafeeds - https://wiki.foxycart.com/v/2.0/transaction_xml_datafeed
+* HMAC Product Verification - https://wiki.foxycart.com/v/2.0/hmac_validation
 
 ## Installation
 
@@ -19,6 +20,24 @@ And then execute:
 Or install it yourself as:
 
 `$ gem install foxycart_helpers`
+
+
+## Setup
+
+The datafeed endpoint defaults to '/foxycart_processor'. If your app is at `https://example.com/` then you should set your datafeed URL in FoxyCart to `https://example.com/foxycart_processor`
+
+`ENV['FOXYCART_API_KEY']` should be set to your FoxyCart API key (available from the FoxyCart Admin area).
+
+Or you can override these in configuration:
+
+```ruby
+# In an appropriate initializer e.g. /config/initializers/foxycart.rb
+FoxycartHelpers.configure do |config|
+  config.mount_point = '/some/other/path'
+  config.api_key = 'foobarbat'
+end
+```
+
 
 ## Usage
 
@@ -40,6 +59,8 @@ __Rack/Sinatra:__
 
 __Rails:__ This middleware is registered automatically.
 
+Then:
+
 ```ruby
 FoxycartHelpers.subscribe do |payload|
   puts payload
@@ -49,6 +70,41 @@ end
 ```
 
 In Rails this could live at `config/initalizers/foxycart.rb`
+
+
+### HMAC Product Verification
+
+This helper HMAC encodes values for use with the Product Verification feature of FoxyCart, it:
+
+* Encodes with your API key `ENV['FOXYCART_API_KEY']`
+* Can return both full string for direct replacement of existing names and values or just the hash.
+* Includes Rails view helpers.
+
+* `code` = Product code (`sku123`)
+* `name` = Value of name field in the HTML (`name`)
+* `value` = Value (or initial value) of the input etc (`Cool Example`)
+
+See the [FoxyCart docs](https://wiki.foxycart.com/v/2.0/hmac_validation) for more information on `code`, `name` and `value`.
+
+__Standalone:__
+
+```ruby
+FoxycartHelpers::ProductVerification.encode code, name, value
+# => "54a534ba0afef1b4589c2f77f9011e27089c0030a8876ec8f06fca281fedeb89"
+FoxycartHelpers::ProductVerification.encoded_name code, name, value
+# => "name||54a534ba0afef1b4589c2f77f9011e27089c0030a8876ec8f06fca281fedeb89"
+```
+
+__Rails:__
+
+In your views:
+
+```ruby
+<%= foxycart_encode 'sku123', 'name', 'Cool Example' %>
+# => "54a534ba0afef1b4589c2f77f9011e27089c0030a8876ec8f06fca281fedeb89"
+<%= foxycart_encoded_name 'sku123', 'name', 'Cool Example' %>
+# => "name||54a534ba0afef1b4589c2f77f9011e27089c0030a8876ec8f06fca281fedeb89"
+```
 
 ## Development
 
