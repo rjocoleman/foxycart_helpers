@@ -10,7 +10,7 @@ module FoxycartHelpers
     end
 
     def config
-      Foxycart.configuration
+      FoxycartHelpers.configuration
     end
 
     def call(env)
