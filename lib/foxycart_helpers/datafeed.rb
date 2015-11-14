@@ -7,10 +7,10 @@ module FoxycartHelpers
   class Datafeed
 
     def self.from_params(params)
-      decoded = URI.unescape params
+      decoded = CGI::unescape params
 
       trimmed = decoded.gsub(/FoxyData=/, '')
-      encrypted = URI.unescape trimmed
+      encrypted = CGI::unescape trimmed
 
       rc4 = RC4.new FoxycartHelpers.configuration.api_key
       decrypted = rc4.decrypt encrypted
