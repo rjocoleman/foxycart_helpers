@@ -18,16 +18,29 @@ module FoxycartHelpers
     end
 
     def query_string
-      URI.encode_www_form({
-        name: @name,
-        price: @price,
-      }.merge(@opts))
+      params = config.auto_encode? ? encoded_query_hash : query_hash
+      string = URI.encode_www_form(params)
+      return string unless config.auto_encode?
+      CGI.unescape string
     end
 
-    def initialize(name, price, opts={})
-      @name = name
+    def query_hash
+      {
+        name: @name,
+        price: @price,
+        code: @code,
+      }.merge(@opts)
+    end
+
+    def encoded_query_hash
+      query_hash.map {|k,v| [k, FoxycartHelpers::ProductVerification.encoded_name(@code, k.to_s, v)]}.to_h
+    end
+
+    def initialize(name, price, code=nil, opts={})
+      @name  = name
       @price = price
-      @opts = opts
+      @code  = code
+      @opts  = opts
     end
 
     def config

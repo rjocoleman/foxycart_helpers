@@ -18,9 +18,11 @@ module FoxycartHelpers
       :api_key,
       :url,
       :mount_point,
+      :auto_encode,
       :raise_exceptions,
     ]
 
+    alias_method :auto_encode?, :auto_encode
     alias_method :raise_exceptions?, :raise_exceptions
 
     def initialize
@@ -28,6 +30,7 @@ module FoxycartHelpers
       @logger           = Logger.new STDOUT
       @api_key          = ENV.fetch 'FOXYCART_API_KEY'
       @url              = ENV['FOXYCART_URL']
+      @auto_encode      = true
       @raise_exceptions = true unless ENV['RACK_ENV'] == 'production'
     end
 
