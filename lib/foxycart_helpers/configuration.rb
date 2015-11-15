@@ -28,7 +28,7 @@ module FoxycartHelpers
     def initialize
       @mount_point       = '/foxycart_processor'
       @logger            = Logger.new STDOUT
-      @api_key           = ENV.fetch 'FOXYCART_API_KEY'
+      @api_key           = ENV['FOXYCART_API_KEY']
       @url               = ENV['FOXYCART_URL']
       @auto_encode_hrefs = true
       @raise_exceptions  = true unless ENV['RACK_ENV'] == 'production'
