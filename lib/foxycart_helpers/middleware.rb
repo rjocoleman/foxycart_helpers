@@ -18,7 +18,7 @@ module FoxycartHelpers
       return @app.call(env) unless req.path_info == config.mount_point
       return response 405 unless req.post?
 
-      parse_and_respond req.body.read
+      parse_and_respond req.POST['FoxyData']
     end
 
   private
