@@ -11,16 +11,32 @@ module FoxycartHelpers
       new(code, name, value).encoded_name
     end
 
+    def self.encoded_value(code, name, value)
+      new(code, name, value).encoded_value
+    end
+
     def encode
       digest = OpenSSL::Digest.new 'sha256'
       key = config.api_key
-      data = @code + @name + @value
+      data = @code + normalized_name + @value
 
       OpenSSL::HMAC.hexdigest digest, key, data
     end
 
     def encoded_name
-      @value + '||' + encode
+      if @value == '--OPEN--'
+        @name + '||' + encode + '||open'
+      else
+        @name + '||' + encode
+      end
+    end
+
+    def encoded_value
+      if @value == '--OPEN--'
+        @name + '||' + encode + '||open'
+      else
+        @value + '||' + encode
+      end
     end
 
     def config
@@ -33,8 +49,14 @@ module FoxycartHelpers
       @value = value
     end
 
-    # encoded_value is an alias for encoded_name
-    singleton_class.send :alias_method, :encoded_value, :encoded_name
+    private
 
+    def normalized_name
+      if @name.match /^\d*:.*/
+        @name.split(':').last
+      else
+        @name
+      end
+    end
   end
 end
