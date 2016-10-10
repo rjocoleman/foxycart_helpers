@@ -3,12 +3,12 @@ require 'foxycart_helpers/configuration'
 module FoxycartHelpers
   class ProductVerification
 
-    def self.encode(*args)
-      new(*args).encode
+    def self.encode(code, name, value)
+      new(code, name, value).encode
     end
 
-    def self.encoded_name(*args)
-      new(*args).encoded_name
+    def self.encoded_name(code, name, value)
+      new(code, name, value).encoded_name
     end
 
     def encode
