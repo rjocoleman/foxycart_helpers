@@ -5,7 +5,7 @@ module FoxycartHelpers
   class Railtie < Rails::Railtie
 
     initializer 'foxycart_helpers.use_rack_middleware' do |app|
-      app.config.middleware.use 'FoxycartHelpers::Middleware'
+      app.config.middleware.use FoxycartHelpers::Middleware
     end
 
     initializer 'foxycart_helpers.configure_view_controller' do |app|

@@ -1,4 +1,5 @@
 require 'foxycart_helpers/configuration'
+require 'openssl'
 
 module FoxycartHelpers
   class ProductVerification
